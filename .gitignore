@@ -1,0 +1,18 @@
+node_modules/
+dist/
+build/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.tmp/
+node-compile-cache/
+release/
+release-latest/**
+!release-latest/
+!release-latest/PDF Watermark Remover 0.1.0.exe
+resources/engine/
+*.log
+.DS_Store
+Thumbs.db
+.claude/

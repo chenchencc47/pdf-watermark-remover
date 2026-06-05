@@ -1,0 +1,65 @@
+{
+  "name": "pdf-watermark-remover",
+  "version": "0.1.0",
+  "description": "Local desktop app for removing authorized PDF watermarks while preserving document structure where possible.",
+  "main": "dist/main/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"vite --host 127.0.0.1\" \"tsc -p tsconfig.node.json --watch\" \"wait-on http://127.0.0.1:5173 && electron .\"",
+    "dev:renderer": "vite --host 127.0.0.1",
+    "build": "tsc -p tsconfig.node.json && vite build",
+    "build:engine": "\"..\\.pdf-inspect-venv\\Scripts\\pyinstaller.exe\" --clean --onefile --name pdf-watermark-engine --distpath resources\\engine --workpath build\\pyinstaller --specpath build\\pyinstaller engine\\pdf_watermark_engine.py",
+    "dist:win": "npm run build && npm run build:engine && electron-builder --win portable",
+    "test:engine": "python -m pytest engine/tests -q",
+    "test:renderer": "vitest run --no-cache --no-file-parallelism --maxWorkers=1",
+    "lint": "tsc --noEmit && tsc -p tsconfig.node.json --noEmit"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "concurrently": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest",
+    "wait-on": "latest"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitest/coverage-v8": "^4.1.8",
+    "cross-env": "^10.1.0",
+    "electron": "^42.3.1",
+    "electron-builder": "^26.8.1",
+    "jsdom": "^29.1.1",
+    "vitest": "^4.1.8"
+  },
+  "build": {
+    "appId": "local.pdf-watermark-remover",
+    "productName": "PDF Watermark Remover",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/engine",
+        "to": "engine",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
+  }
+}
