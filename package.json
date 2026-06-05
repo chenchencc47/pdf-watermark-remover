@@ -2,6 +2,7 @@
   "name": "pdf-watermark-remover",
   "version": "0.1.0",
   "description": "Local desktop app for removing authorized PDF watermarks while preserving document structure where possible.",
+  "license": "MIT",
   "main": "dist/main/main.js",
   "type": "module",
   "scripts": {
